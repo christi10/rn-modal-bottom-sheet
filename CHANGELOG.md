@@ -7,197 +7,130 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.0.0] - 2025-10-09
-
-### Added - Interactive Scroll-to-Expand & Collapse
-
-#### Scroll-Based Snap Point Navigation
-- **Scroll to Expand**: Scrolling down in content automatically expands to the next snap point
-  - Velocity-based detection: gentle scroll (next point), medium swipe (+2 points), fast swipe (max)
-  - Threshold adjustable via `scrollExpandThreshold` prop (default: 15px)
-  - Works seamlessly with ScrollView content
-- **Pull to Collapse**: Pull down at the top of ScrollView to collapse or close
-  - Gentle pull: moves to previous snap point
-  - Fast swipe (velocity > 1.0): instantly closes the sheet
-  - Natural iOS-like behavior with bounce effect
-- **New Ref Methods**:
-  - `handleScroll()`: Process scroll events for expansion
-  - `handleScrollBeginDrag()`: Track scroll start position
-  - `handleScrollEndDrag()`: Handle pull-to-collapse gestures
-
-#### Scroll-to-Expand Configuration
-- **`enableScrollToExpand`** (boolean, default: true): Enable/disable scroll-based navigation
-- **`scrollExpandThreshold`** (number, default: 50px): Pixels to scroll before triggering transition
-- **Velocity Detection**: Automatically adjusts behavior based on scroll speed
-  - 0.8-2.2: Move one snap point
-  - 2.2-3.5: Jump two snap points
-  - >3.5: Jump to maximum or minimum
-
-#### Animation Improvements
-- **Smoother Easing**: Changed from exponential to bezier curve `(0.25, 0.1, 0.25, 1)`
-  - Matches iOS native animation feel
-  - Gentle acceleration and deceleration
-- **Optimized Duration**: Increased from 150ms to 280ms for smoother transitions
-- **Better Handle Dragging**: Fixed drag gesture to work from any snap point
-  - Can now drag handle down even when list is at top
-  - Proper downward movement allowed at maximum snap point
-
-#### Accessibility Enhancements
-- **ARIA Attributes**: Switched from React Native accessibility props to web-standard ARIA
-  - `accessibilityRole` → `role`
-  - `accessibilityLabel` → `aria-label`
-  - `accessibilityViewIsModal` → `aria-modal`
-  - Added `aria-describedby`, `aria-hidden` support
-- **Improved Props Interface**: New `sheetAriaProps` for custom ARIA configuration
-
-#### New Examples
-- **Two Snap Points Demo**: Simplified example with just 30% and 90% snap points
-  - Demonstrates simpler use cases (music players, quick settings)
-  - Shows scroll-to-expand with fewer transition points
-- **Enhanced Three Points Demo**: Updated with scroll-to-expand instructions
-  - Interactive velocity-based navigation
-  - Visual feedback of current snap position
+## [2.2.0] - 2025-10-12
 
 ### Changed
-- **Touch Move Logic**: Simplified conditions for better responsiveness
-  - Removed redundant `deltaY` check that blocked some gestures
-  - Clearer comments explaining upward/downward movement
-- **Scroll Thresholds**: Tuned for better responsiveness
-  - Lowered velocity threshold for pull-to-collapse (0.5 → 0.3)
-  - Added debounce protection to prevent double-triggers
-  - Shorter cooldown period (500ms → 400ms)
-- **Examples Refactored**: All examples now use ModalSheet instead of custom Modal
-  - Removed `CustomBottomSheet` component entirely
-  - Consistent API across all examples
-  - Cleaner, more maintainable code
+- **Major Refactoring**: Reorganized codebase into modular architecture for better maintainability
+  - Split component into separate modules (hooks, components, types, utils, constants)
+  - Extracted animation logic into `useModalAnimations` hook
+  - Extracted keyboard handling into `useKeyboardHandler` hook
+  - Extracted touch/gesture handling into `useTouchHandler` hook
+  - Extracted scroll handling into `useScrollHandler` hook
+  - Created reusable UI components (`ModalSheetHandle`, `ModalSheetBackdrop`, `ModalSheetContent`)
+  - Centralized constants and type definitions
+  - Improved code organization and testability
+
+### Technical Improvements
+- Better separation of concerns with dedicated hooks for each feature
+- Enhanced code reusability and maintainability
+- Improved TypeScript type safety with dedicated type definitions
+- Cleaner component structure with smaller, focused modules
+
+### Notes
+- This is a **non-breaking change** - the public API remains exactly the same
+- All existing functionality preserved with improved internal architecture
+- No migration required for existing users
+
+## [2.1.2] - 2025-10-10
 
 ### Fixed
-- **Handle Dragging at Max Height**: Can now drag down from maximum snap point
-  - Previously blocked when ScrollView was at top
-  - Now properly allows collapse/close gestures
-- **ScrollView Indicator**: Hidden across all examples for cleaner UI
-- **Gesture Conflicts**: Resolved issues between handle drag and scroll gestures
+- Restored original single-file architecture to resolve module export issues
+- Fixed "Element type is invalid" error that occurred with modular structure
+- Cleaned build artifacts to ensure correct package distribution
+
+## [2.1.1] - 2025-10-10
+
+### Changed
+- Attempted modular refactoring (reverted in 2.1.2 due to export issues)
+
+## [2.1.0] - 2025-10-10
+
+### Added
+- **`enableDragAndDrop` Prop**: New optional prop for automatic GestureHandlerRootView wrapping
+  - Set to `true` when using gesture-based components like DraggableFlatList
+  - Eliminates need for manual GestureHandlerRootView wrapper in modal content
+  - Default is `false` for better performance when gesture handling is not needed
+  - Simplifies integration with react-native-draggable-flatlist and similar libraries
+
+### Improved
+- **Cleaner API**: Gesture-enabled components now work with a simple prop toggle
+- **Better Performance**: GestureHandlerRootView only added when explicitly needed
+- **Developer Experience**: Removed boilerplate code from examples
+
+### Dependencies
+- Added `react-native-gesture-handler` as a peer dependency (when using `enableDragAndDrop`)
+
+## [2.0.1] - 2025-10-09
+
+### Fixed
+- Documentation updates and minor bug fixes
+
+## [2.0.0] - 2025-10-08
+
+### Added - Major Feature: Scroll-to-Expand & Interactive Snap Points
+
+#### Scroll-to-Expand Features
+- **Natural Scrolling**: Expand/collapse sheet by scrolling within content
+- **Velocity Detection**: Fast swipes jump multiple snap points or to extremes
+- **Smart Boundaries**: Scroll up at top to collapse, scroll down to expand
+- **New Props**:
+  - `enableScrollToExpand`: Enable/disable scroll expansion (default: true)
+  - `scrollExpandThreshold`: Pixels to scroll before triggering snap (default: 50)
+- **New Ref Methods**:
+  - `handleScroll`: Process scroll events for expansion
+  - `handleScrollBeginDrag`: Track scroll gesture start
+  - `handleScrollEndDrag`: Detect pull-down gestures at top
+
+#### Interactive Snap Points
+- **Flexible Definition**: Support for percentage strings (e.g., "50%") and SharedValue
+- **Smooth Transitions**: Bezier curve easing for natural movement
+- **Keyboard Awareness**: Snap points adjust when keyboard appears
+- **Performance**: All animations use native driver at 60fps
 
 ### Breaking Changes
-- **Accessibility Props**: Old React Native accessibility props still work but ARIA attributes are recommended
-  - Migration: Replace `accessibilityLabel` with `aria-label`, etc.
-  - Both approaches supported for backward compatibility
-
-### Technical Details
-**Scroll-to-Expand Flow**:
-```javascript
-// User scrolls down to see more content
-onScroll → detect velocity → determine target snap point → animate
-
-// User pulls down at top to go back
-onScrollEndDrag → detect pull gesture → collapse or close
-```
-
-**Animation Comparison**:
-| Version | Duration | Easing | Feel |
-|---------|----------|--------|------|
-| 1.1.0 | 150ms | cubic | Quick, mechanical |
-| 2.0.0 | 280ms | bezier(0.25, 0.1, 0.25, 1) | Smooth, natural |
-
-### Performance
-- ✅ **No Layout Shifts**: Scroll detection doesn't trigger re-renders
-- ✅ **Native Driver**: All scroll-based animations use native thread
-- ✅ **Debounced**: Prevents rapid-fire snap transitions
-- ✅ **Optimized Thresholds**: Tuned for responsive but not overly sensitive behavior
+- `snapPoints` prop now accepts `(string | number)[]` instead of just `number[]`
 
 ## [1.1.0] - 2025-10-08
 
-### Changed - Major Refactor: Snap Points Implementation
+### Added - Major Feature: Snap Points Implementation
 
-#### Architecture Overhaul
-- **Full Height Rendering**: Modal sheet now always renders at maximum snap point height
-  - Content is pre-rendered once and never recalculated
-  - Eliminates layout recalculations during snap transitions
-- **Transform-Based Animation**: Switched from height changes to `translateY` transforms
-  - All animations use `useNativeDriver: true` for 60fps performance
-  - No more flickering or visual glitches during transitions
-- **Viewport Drawer Approach**: Sheet acts like a drawer sliding behind a viewport
-  - Shows different portions of pre-rendered content
-  - Instagram-like smooth behavior
-
-#### Snap Point Logic Improvements
+#### Snap Point Features
 - **Multi-Point Snapping**: Supports multiple snap heights (e.g., 30%, 60%, 90%)
 - **Intelligent Detection**: Automatically snaps to closest snap point based on final drag position
 - **Cross-Point Dragging**: Can skip multiple snap points in one continuous swipe
 - **Direct Close**: Can close from any snap point without returning to smallest first
-- **Threshold-Based**: Uses drag distance to determine if user crossed into next snap point
+- **New Props**:
+  - `snapPoints`: Array of snap positions (percentage or pixels)
+  - `initialSnapIndex`: Starting snap point index (default: 0)
+  - `enableScrollToExpand`: Enable scroll-to-expand behavior
+  - `onSnapPointChange`: Callback when snap point changes
+- **New Ref Method**: `snapToPoint(index)` - Programmatically snap to specific point
 
-#### Animation Optimizations
+#### Architecture Improvements
+- **Transform-Based Animation**: Switched from height changes to `translateY` transforms
+  - All animations use `useNativeDriver: true` for 60fps performance
+  - No more flickering or visual glitches during transitions
+- **Full Height Rendering**: Modal sheet renders at maximum snap point height
+  - Content is pre-rendered once and never recalculated
+  - Eliminates layout recalculations during snap transitions
+- **Viewport Drawer Approach**: Sheet acts like a drawer sliding behind a viewport
+
+#### Performance Optimizations
 - **Faster Animations**: Reduced from 200ms → **150ms** for quicker response
-- **Predictable Timing**: Replaced spring animations with `Animated.timing`
-  - Uses `Easing.out(Easing.cubic)` for smooth deceleration
-  - Fixed duration means no waiting for spring to settle
+- **Predictable Timing**: Uses `Animated.timing` with `Easing.out(Easing.cubic)`
 - **Animation Blocking**: Added `isAnimating` state to prevent gesture conflicts
-  - Blocks new touch interactions during snap animations
-  - Ensures smooth, uninterrupted transitions
-
-#### Touch Handling Refactor
-- **`handleTouchStart`**: Now checks `isAnimating` to prevent conflicts
-- **`handleTouchMove`**: Direct translateY updates for 1:1 finger tracking
-- **`handleTouchEnd`**: Calculates nearest snap point and triggers animation
-- **Helper Functions**:
-  - `getSnapTranslateY()`: Calculates transform offset for each snap index
-  - `findTargetSnapIndex()`: Determines target based on current translateY position
-  - `animateToSnapPoint()`: Handles snap animation with proper state management
-
-#### State Management
-- **New State**: `isAnimating` prevents touch during animations
-- **Improved Tracking**: `currentSnapIndex` properly tracks active snap point
-- **Animation Callbacks**: All animations properly clear state on completion
-
-#### Code Cleanup
-- **Removed Viewport Wrapper**: Eliminated extra `sheetViewport` container
-- **Simplified Structure**: Background color applied directly to sheet
-- **Cleaner Styles**: Removed unused `sheetViewport` and `contentAbsolute` styles
-- **Removed Unused Code**: Cleaned up old `getCurrentSnapPosition` function
-- **Optimized Keyboard Handling**: Simplified keyboard event listeners
-
-#### Technical Details
-
-**Before (Old Approach)**:
-```javascript
-// Dynamic height changes
-height: snapPointsInPixels[currentSnapIndex]
-
-// Used LayoutAnimation
-LayoutAnimation.configureNext(...)
-setCurrentSnapIndex(index)
-
-// Content recalculated on each snap
-```
-
-**After (New Approach)**:
-```javascript
-// Fixed height at maximum
-height: calculatedHeight
-
-// Pure transform animations
-transform: [{ translateY: translateY }]
-
-// Content always rendered, just repositioned
-```
-
-#### Performance Benefits
 - ✅ **No Layout Recalculations**: Content never re-renders during snaps
 - ✅ **Native Driver**: All animations run on UI thread at 60fps
-- ✅ **Reduced Jank**: No flickering or visual glitches
-- ✅ **Faster Response**: 150ms animations feel instant
 - ✅ **Memory Efficient**: Content rendered once, not recreated
 
-#### Animation Timeline
-| Event | Duration | Easing |
-|-------|----------|--------|
-| Snap to Point | 150ms | `Easing.out(Easing.cubic)` |
-| Close Animation | 50ms | `Easing.out(Easing.ease)` |
-| Spring Back (same point) | 150ms | `Easing.out(Easing.cubic)` |
-
 ### Fixed
-- **Draggable List Example**: Fixed height constraint issue preventing items from rendering in examples
+- **Draggable List Example**: Fixed height constraint issue preventing items from rendering
+  - Changed from `flex: 1` to explicit height calculation
+  - Removed unnecessary `containerStyle` from DraggableFlatList
+
+### Changed
+- **Code Cleanup**: Removed unused viewport wrapper and simplified structure
+- **Optimized Keyboard Handling**: Simplified keyboard event listeners
 
 ### Breaking Changes
 None - All existing props and APIs remain backward compatible
