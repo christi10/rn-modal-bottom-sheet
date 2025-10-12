@@ -13,7 +13,7 @@ import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import ModalSheet, { ModalSheetRef } from '../../react-native-modal-sheet/src/ModalSheet';
+import ModalSheet, { ModalSheetRef } from '../../react-native-modal-sheet/src';
 
 type ExampleType =
   | 'actions'
