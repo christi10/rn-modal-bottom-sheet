@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-10-12
+
+### Changed
+- **Major Refactoring**: Reorganized codebase into modular architecture for better maintainability
+  - Split component into separate modules (hooks, components, types, utils, constants)
+  - Extracted animation logic into `useModalAnimations` hook
+  - Extracted keyboard handling into `useKeyboardHandler` hook
+  - Extracted touch/gesture handling into `useTouchHandler` hook
+  - Extracted scroll handling into `useScrollHandler` hook
+  - Created reusable UI components (`ModalSheetHandle`, `ModalSheetBackdrop`, `ModalSheetContent`)
+  - Centralized constants and type definitions
+  - Improved code organization and testability
+
+### Technical Improvements
+- Better separation of concerns with dedicated hooks for each feature
+- Enhanced code reusability and maintainability
+- Improved TypeScript type safety with dedicated type definitions
+- Cleaner component structure with smaller, focused modules
+
+### Notes
+- This is a **non-breaking change** - the public API remains exactly the same
+- All existing functionality preserved with improved internal architecture
+- No migration required for existing users
+
 ## [2.1.2] - 2025-10-10
 
 ### Fixed
