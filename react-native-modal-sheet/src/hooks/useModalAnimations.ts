@@ -27,7 +27,27 @@ export const useModalAnimations = (
 
   // Animate sheet position when keyboard appears/disappears
   useEffect(() => {
-    if (!avoidKeyboard || !visible) return;
+    if (!avoidKeyboard || !visible) return undefined;
+
+    // Wait for any opening/closing animation to complete
+    if (isImperativelyAnimating.current) {
+      // If modal is still opening, wait for it to finish
+      const checkInterval = setInterval(() => {
+        if (!isImperativelyAnimating.current) {
+          clearInterval(checkInterval);
+          Animated.timing(translateY, {
+            toValue: snapPointsInPixels
+              ? getSnapTranslateY(currentSnapIndex, snapPointsInPixels) - keyboardHeight
+              : -keyboardHeight,
+            duration: 250,
+            easing: Easing.out(Easing.cubic),
+            useNativeDriver: true,
+          }).start();
+        }
+      }, 50);
+
+      return () => clearInterval(checkInterval);
+    }
 
     // Animate the sheet up or down based on keyboard height
     Animated.timing(translateY, {
@@ -38,6 +58,8 @@ export const useModalAnimations = (
       easing: Easing.out(Easing.cubic),
       useNativeDriver: true,
     }).start();
+
+    return undefined;
   }, [
     keyboardHeight,
     avoidKeyboard,

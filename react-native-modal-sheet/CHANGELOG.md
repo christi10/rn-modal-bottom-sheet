@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2025-10-13
+
+### Fixed
+- **Backdrop Opacity Issue with `avoidKeyboard`**: Fixed race condition that caused backdrop to appear washed out when using `avoidKeyboard={true}`
+  - The keyboard animation was interrupting the modal opening animation, causing the backdrop opacity to stop mid-animation
+  - Added synchronization check to ensure opening animation completes before keyboard adjustment runs
+  - Backdrop now consistently reaches its target opacity regardless of keyboard timing
+  - Affected users with forms and text inputs that open the keyboard immediately after modal appears
+
+### Technical Details
+- Fixed race condition in `useModalAnimations` hook where keyboard `useEffect` would start a new animation on `translateY` while the parallel opening animation (including backdrop opacity) was still running
+- Added `isImperativelyAnimating` check with interval-based waiting mechanism to prevent animation conflicts
+- Ensures backdrop opacity animation always completes to its full value before keyboard adjustments are applied
+
 ## [2.2.0] - 2025-10-12
 
 ### Changed

@@ -668,6 +668,9 @@ export default function ExamplesScreen() {
         backgroundColor="white"
         borderRadius={20}
         showHandle={true}
+        avoidKeyboard={true}
+        keyboardOffset={10}
+        backdropOpacity={0.7}
       >
         {activeExample === 'form' && renderSheetContent()}
       </ModalSheet>
@@ -766,6 +769,8 @@ export default function ExamplesScreen() {
         backgroundColor="white"
         borderRadius={20}
         showHandle={true}
+        avoidKeyboard={true}
+        keyboardOffset={10}
         containerStyle={{ paddingBottom: 40 }}
       >
         <GestureHandlerRootView style={{ height: '100%' }}>
