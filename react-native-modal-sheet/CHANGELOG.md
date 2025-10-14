@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2025-10-14
+
+### Added
+- **Context API Support**: New Context API for improved state management and component integration
+  - `ModalSheetProvider`: Context provider for managing multiple modal sheets
+  - `ModalSheetContext`: Context for accessing modal sheet state and controls
+  - `useModalSheet`: Custom hook for accessing modal sheet context in child components
+  - Enables imperative control of modal sheets from anywhere in the component tree
+  - Simplifies coordination between multiple modal sheets
+
+### Changed
+- Enhanced modular architecture with centralized state management
+- Improved TypeScript types for context and provider components
+
+### Technical Improvements
+- Better separation of concerns with Context API integration
+- Cleaner component communication patterns
+- Enhanced developer experience with hook-based API
+
 ## [2.2.1] - 2025-10-13
 
 ### Fixed
