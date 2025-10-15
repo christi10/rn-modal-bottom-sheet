@@ -13,7 +13,7 @@ import DraggableFlatList, {
   RenderItemParams,
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
-import ModalSheet, { ModalSheetRef } from '../../react-native-modal-sheet/src';
+import ModalSheet, { ModalSheetRef, useModalSheet } from '../../react-native-modal-sheet/src';
 
 type ExampleType =
   | 'actions'
@@ -21,13 +21,18 @@ type ExampleType =
   | 'scroll'
   | 'large'
   | 'small'
+  | 'tinySheet'
   | 'draggable'
   | 'dynamic'
   | 'dynamicSmall'
   | 'dynamicMedium'
   | 'dynamicLarge'
   | 'snapPoints'
-  | 'snapPointsTwo';
+  | 'snapPointsTwo'
+  | 'contextDemo'
+  | 'modal1'
+  | 'modal2'
+  | 'modal3';
 
 type DraggableItem = {
   key: string;
@@ -54,6 +59,9 @@ export default function ExamplesScreen() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [currentSnapIndex, setCurrentSnapIndex] = useState(0);
 
+  // Get context methods
+  const { dismiss, dismissAll } = useModalSheet();
+
   // Refs for all modal sheets
   const actionsSheetRef = useRef<ModalSheetRef>(null);
   const formSheetRef = useRef<ModalSheetRef>(null);
@@ -66,6 +74,11 @@ export default function ExamplesScreen() {
   const dynamicLargeSheetRef = useRef<ModalSheetRef>(null);
   const snapPointSheetRef = useRef<ModalSheetRef>(null);
   const snapPointsTwoSheetRef = useRef<ModalSheetRef>(null);
+  const contextDemoSheetRef = useRef<ModalSheetRef>(null);
+  const modal1Ref = useRef<ModalSheetRef>(null);
+  const modal2Ref = useRef<ModalSheetRef>(null);
+  const modal3Ref = useRef<ModalSheetRef>(null);
+  const tinySheetRef = useRef<ModalSheetRef>(null);
 
   const initialData: DraggableItem[] = [...Array(8)].map((_, index) => ({
     key: `item-${index}`,
@@ -94,6 +107,9 @@ export default function ExamplesScreen() {
         case 'small':
           smallSheetRef.current?.open();
           break;
+        case 'tinySheet':
+          tinySheetRef.current?.open();
+          break;
         case 'draggable':
           draggableSheetRef.current?.open();
           break;
@@ -111,6 +127,18 @@ export default function ExamplesScreen() {
           break;
         case 'snapPointsTwo':
           snapPointsTwoSheetRef.current?.open();
+          break;
+        case 'contextDemo':
+          contextDemoSheetRef.current?.open();
+          break;
+        case 'modal1':
+          modal1Ref.current?.open();
+          break;
+        case 'modal2':
+          modal2Ref.current?.open();
+          break;
+        case 'modal3':
+          modal3Ref.current?.open();
           break;
       }
     }, 100);
@@ -309,6 +337,13 @@ export default function ExamplesScreen() {
                 <Text style={styles.iconButtonText}>📱</Text>
               </Pressable>
             </View>
+          </View>
+        );
+
+      case 'tinySheet':
+        return (
+          <View>
+            <Text style={{ fontSize: 14, textAlign: 'center' }}>Test swipe</Text>
           </View>
         );
 
@@ -531,6 +566,132 @@ export default function ExamplesScreen() {
           </View>
         );
 
+      case 'contextDemo':
+        return (
+          <View style={styles.sheetContent}>
+            <Text style={styles.sheetTitle}>🎯 Context API Demo</Text>
+            <Text style={styles.dynamicSubtitle}>
+              Test the useModalSheet hook with multiple modals and context methods!
+            </Text>
+
+            <View style={styles.dynamicCard}>
+              <Text style={styles.dynamicCardTitle}>📋 How It Works</Text>
+              <Text style={styles.dynamicCardText}>
+                • Each modal has controls inside it{'\n'}
+                • Open multiple modals simultaneously{'\n'}
+                • Use dismiss() from any modal{'\n'}
+                • Use dismissAll() to close everything
+              </Text>
+            </View>
+
+            <Text style={styles.contextSubHeader}>Open Modals:</Text>
+            <View style={styles.modalButtonRow}>
+              <Pressable
+                style={({ pressed }) => [
+                  styles.modalButtonSmall,
+                  styles.modal1Button,
+                  { opacity: pressed ? 0.7 : 1 },
+                ]}
+                onPress={() => openSheet('modal1')}
+              >
+                <Text style={styles.modalButtonSmallText}>🟦 Modal 1</Text>
+              </Pressable>
+
+              <Pressable
+                style={({ pressed }) => [
+                  styles.modalButtonSmall,
+                  styles.modal2Button,
+                  { opacity: pressed ? 0.7 : 1 },
+                ]}
+                onPress={() => openSheet('modal2')}
+              >
+                <Text style={styles.modalButtonSmallText}>🟩 Modal 2</Text>
+              </Pressable>
+
+              <Pressable
+                style={({ pressed }) => [
+                  styles.modalButtonSmall,
+                  styles.modal3Button,
+                  { opacity: pressed ? 0.7 : 1 },
+                ]}
+                onPress={() => openSheet('modal3')}
+              >
+                <Text style={styles.modalButtonSmallText}>🟥 Modal 3</Text>
+              </Pressable>
+            </View>
+
+            <View style={styles.divider} />
+
+            <Pressable
+              style={({ pressed }) => [
+                styles.actionButton,
+                styles.dangerButton,
+                { opacity: pressed ? 0.8 : 1 },
+              ]}
+              onPress={() => dismissAll()}
+            >
+              <Text style={styles.buttonText}>🚫 Dismiss All Modals</Text>
+            </Pressable>
+          </View>
+        );
+
+      case 'modal1':
+        return (
+          <View style={[styles.sheetContent, { backgroundColor: '#E3F2FD' }]}>
+            <Text style={styles.sheetTitle}>🟦 Modal 1</Text>
+            <Text style={styles.dynamicSubtitle}>
+              This is the first modal. You can open other modals while this one is open!
+            </Text>
+            <Pressable
+              style={({ pressed }) => [
+                styles.actionButton,
+                { backgroundColor: '#2196F3', opacity: pressed ? 0.8 : 1 },
+              ]}
+              onPress={() => modal1Ref.current?.close()}
+            >
+              <Text style={styles.buttonText}>Close Modal 1</Text>
+            </Pressable>
+          </View>
+        );
+
+      case 'modal2':
+        return (
+          <View style={[styles.sheetContent, { backgroundColor: '#E8F5E9' }]}>
+            <Text style={styles.sheetTitle}>🟩 Modal 2</Text>
+            <Text style={styles.dynamicSubtitle}>
+              This is the second modal. Notice how you can have multiple modals open at once!
+            </Text>
+            <Pressable
+              style={({ pressed }) => [
+                styles.actionButton,
+                { backgroundColor: '#4CAF50', opacity: pressed ? 0.8 : 1 },
+              ]}
+              onPress={() => modal2Ref.current?.close()}
+            >
+              <Text style={styles.buttonText}>Close Modal 2</Text>
+            </Pressable>
+          </View>
+        );
+
+      case 'modal3':
+        return (
+          <View style={[styles.sheetContent, { backgroundColor: '#FFEBEE' }]}>
+            <Text style={styles.sheetTitle}>🟥 Modal 3</Text>
+            <Text style={styles.dynamicSubtitle}>
+              This is the third modal. Try dismissing all modals at once from the Context Demo!
+            </Text>
+            <Pressable
+              style={({ pressed }) => [
+                styles.actionButton,
+                { backgroundColor: '#F44336', opacity: pressed ? 0.8 : 1 },
+              ]}
+              onPress={() => modal3Ref.current?.close()}
+            >
+              <Text style={styles.buttonText}>Close Modal 3</Text>
+            </Pressable>
+          </View>
+        );
+
       default:
         return null;
     }
@@ -574,6 +735,13 @@ export default function ExamplesScreen() {
           onPress={() => openSheet('small')}
         >
           <Text style={styles.exampleButtonText}>Small Sheet (200px)</Text>
+        </Pressable>
+
+        <Pressable
+          style={({ pressed }) => [styles.exampleButton, { opacity: pressed ? 0.8 : 1 }]}
+          onPress={() => openSheet('tinySheet')}
+        >
+          <Text style={styles.exampleButtonText}>Tiny Sheet - One Line (Auto)</Text>
         </Pressable>
 
         <Pressable
@@ -647,6 +815,19 @@ export default function ExamplesScreen() {
         >
           <Text style={styles.exampleButtonText}>🎯 Snap Points - 2 Points</Text>
         </Pressable>
+
+        <Text style={styles.sectionHeader}>Context API Examples</Text>
+
+        <Pressable
+          style={({ pressed }) => [
+            styles.exampleButton,
+            styles.contextButton,
+            { opacity: pressed ? 0.8 : 1 },
+          ]}
+          onPress={() => openSheet('contextDemo')}
+        >
+          <Text style={styles.exampleButtonText}>🎯 Context API - Dismiss & DismissAll</Text>
+        </Pressable>
       </ScrollView>
 
       {/* Actions Modal */}
@@ -709,6 +890,17 @@ export default function ExamplesScreen() {
         showHandle={true}
       >
         {activeExample === 'small' && renderSheetContent()}
+      </ModalSheet>
+
+      {/* Tiny Sheet Modal */}
+      <ModalSheet
+        ref={tinySheetRef}
+        onClose={closeSheet}
+        backgroundColor="white"
+        borderRadius={20}
+        showHandle={true}
+      >
+        {activeExample === 'tinySheet' && renderSheetContent()}
       </ModalSheet>
 
       {/* Draggable List Modal */}
@@ -1046,6 +1238,246 @@ export default function ExamplesScreen() {
           </ScrollView>
         </GestureHandlerRootView>
       </ModalSheet>
+
+      {/* Context Demo Modal */}
+      <ModalSheet
+        ref={contextDemoSheetRef}
+        name="context-demo"
+        onClose={closeSheet}
+        backgroundColor="white"
+        borderRadius={20}
+        showHandle={true}
+      >
+        {activeExample === 'contextDemo' && renderSheetContent()}
+      </ModalSheet>
+
+      {/* Modal 1 */}
+      <ModalSheet
+        ref={modal1Ref}
+        name="modal-1"
+        height={450}
+        backgroundColor="#E3F2FD"
+        borderRadius={20}
+        showHandle={true}
+      >
+        <View style={[styles.sheetContent, { backgroundColor: '#E3F2FD', paddingTop: 10 }]}>
+          <Text style={styles.sheetTitle}>🟦 Modal 1</Text>
+          <Text style={styles.dynamicSubtitle}>
+            Test context methods from inside this modal!
+          </Text>
+
+          <Text style={styles.contextSubHeader}>Open Other Modals:</Text>
+          <View style={styles.modalButtonRow}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.modalButtonSmall,
+                styles.modal2Button,
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+              onPress={() => openSheet('modal2')}
+            >
+              <Text style={styles.modalButtonSmallText}>🟩 Modal 2</Text>
+            </Pressable>
+
+            <Pressable
+              style={({ pressed }) => [
+                styles.modalButtonSmall,
+                styles.modal3Button,
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+              onPress={() => openSheet('modal3')}
+            >
+              <Text style={styles.modalButtonSmallText}>🟥 Modal 3</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.divider} />
+
+          <Text style={styles.contextSubHeader}>Context Methods:</Text>
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              { backgroundColor: '#2196F3', opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismiss()}
+          >
+            <Text style={styles.buttonText}>dismiss() - Close Last Modal</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              { backgroundColor: '#1976D2', opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismiss('modal-2')}
+          >
+            <Text style={styles.buttonText}>dismiss('modal-2') - Close Modal 2</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              styles.dangerButton,
+              { opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismissAll()}
+          >
+            <Text style={styles.buttonText}>dismissAll() - Close All</Text>
+          </Pressable>
+        </View>
+      </ModalSheet>
+
+      {/* Modal 2 */}
+      <ModalSheet
+        ref={modal2Ref}
+        name="modal-2"
+        height={450}
+        backgroundColor="#E8F5E9"
+        borderRadius={20}
+        showHandle={true}
+      >
+        <View style={[styles.sheetContent, { backgroundColor: '#E8F5E9', paddingTop: 10 }]}>
+          <Text style={styles.sheetTitle}>🟩 Modal 2</Text>
+          <Text style={styles.dynamicSubtitle}>
+            Multiple modals can be open simultaneously!
+          </Text>
+
+          <Text style={styles.contextSubHeader}>Open Other Modals:</Text>
+          <View style={styles.modalButtonRow}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.modalButtonSmall,
+                styles.modal1Button,
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+              onPress={() => openSheet('modal1')}
+            >
+              <Text style={styles.modalButtonSmallText}>🟦 Modal 1</Text>
+            </Pressable>
+
+            <Pressable
+              style={({ pressed }) => [
+                styles.modalButtonSmall,
+                styles.modal3Button,
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+              onPress={() => openSheet('modal3')}
+            >
+              <Text style={styles.modalButtonSmallText}>🟥 Modal 3</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.divider} />
+
+          <Text style={styles.contextSubHeader}>Context Methods:</Text>
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              { backgroundColor: '#4CAF50', opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismiss()}
+          >
+            <Text style={styles.buttonText}>dismiss() - Close Last Modal</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              { backgroundColor: '#388E3C', opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismiss('modal-1')}
+          >
+            <Text style={styles.buttonText}>dismiss('modal-1') - Close Modal 1</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              styles.dangerButton,
+              { opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismissAll()}
+          >
+            <Text style={styles.buttonText}>dismissAll() - Close All</Text>
+          </Pressable>
+        </View>
+      </ModalSheet>
+
+      {/* Modal 3 */}
+      <ModalSheet
+        ref={modal3Ref}
+        name="modal-3"
+        height={450}
+        backgroundColor="#FFEBEE"
+        borderRadius={20}
+        showHandle={true}
+      >
+        <View style={[styles.sheetContent, { backgroundColor: '#FFEBEE', paddingTop: 10 }]}>
+          <Text style={styles.sheetTitle}>🟥 Modal 3</Text>
+          <Text style={styles.dynamicSubtitle}>
+            Test dismissing specific modals by name!
+          </Text>
+
+          <Text style={styles.contextSubHeader}>Open Other Modals:</Text>
+          <View style={styles.modalButtonRow}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.modalButtonSmall,
+                styles.modal1Button,
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+              onPress={() => openSheet('modal1')}
+            >
+              <Text style={styles.modalButtonSmallText}>🟦 Modal 1</Text>
+            </Pressable>
+
+            <Pressable
+              style={({ pressed }) => [
+                styles.modalButtonSmall,
+                styles.modal2Button,
+                { opacity: pressed ? 0.7 : 1 },
+              ]}
+              onPress={() => openSheet('modal2')}
+            >
+              <Text style={styles.modalButtonSmallText}>🟩 Modal 2</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.divider} />
+
+          <Text style={styles.contextSubHeader}>Context Methods:</Text>
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              { backgroundColor: '#F44336', opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismiss()}
+          >
+            <Text style={styles.buttonText}>dismiss() - Close Last Modal</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              { backgroundColor: '#D32F2F', opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismiss('modal-3')}
+          >
+            <Text style={styles.buttonText}>dismiss('modal-3') - Close This Modal</Text>
+          </Pressable>
+
+          <Pressable
+            style={({ pressed }) => [
+              styles.actionButton,
+              styles.dangerButton,
+              { opacity: pressed ? 0.8 : 1 },
+            ]}
+            onPress={() => dismissAll()}
+          >
+            <Text style={styles.buttonText}>dismissAll() - Close All</Text>
+          </Pressable>
+        </View>
+      </ModalSheet>
     </View>
   );
 }
@@ -1279,5 +1711,46 @@ const styles = StyleSheet.create({
   snapButtonTextActive: {
     color: '#34C759',
     fontWeight: '700',
+  },
+  contextButton: {
+    backgroundColor: '#FF9500',
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#E5E5EA',
+    marginVertical: 15,
+  },
+  contextSubHeader: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 12,
+    marginTop: 5,
+  },
+  modalButtonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 10,
+    marginBottom: 10,
+  },
+  modalButtonSmall: {
+    flex: 1,
+    padding: 14,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modal1Button: {
+    backgroundColor: '#2196F3',
+  },
+  modal2Button: {
+    backgroundColor: '#4CAF50',
+  },
+  modal3Button: {
+    backgroundColor: '#F44336',
+  },
+  modalButtonSmallText: {
+    color: 'white',
+    fontSize: 13,
+    fontWeight: '600',
   },
 });
