@@ -20,14 +20,16 @@ export const modalSheetStyles = StyleSheet.create({
   },
   handleContainer: {
     alignItems: 'center',
-    paddingVertical: 12,
+    paddingVertical: 16,
+    paddingBottom: 20,
     width: '100%',
     backgroundColor: 'transparent',
+    minHeight: 44,
   },
   handle: {
     width: 40,
-    height: 4,
-    borderRadius: 2,
+    height: 5,
+    borderRadius: 2.5,
   },
   content: {
     flexShrink: 1,

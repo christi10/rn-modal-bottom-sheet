@@ -33,6 +33,7 @@ export interface ModalSheetAccessibilityProps {
 
 export interface ModalSheetProps extends ModalSheetAccessibilityProps {
   children: React.ReactNode;
+  name?: string;
   enableDragAndDrop?: boolean;
   avoidKeyboard?: boolean;
   keyboardOffset?: number;

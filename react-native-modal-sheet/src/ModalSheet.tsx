@@ -6,6 +6,7 @@ import React, {
   useState,
   useMemo,
   useCallback,
+  useContext,
 } from 'react';
 import {
   View,
@@ -18,6 +19,9 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Types and interfaces
 import { ModalSheetProps, ModalSheetRef } from './types/ModalSheet.types';
+
+// Context
+import { ModalSheetContext } from './contexts/ModalSheetContext';
 
 // Constants
 import { DEFAULT_VALUES } from './constants/ModalSheet.constants';
@@ -50,6 +54,7 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
   (
     {
       children,
+      name,
       enableDragAndDrop = false,
       avoidKeyboard = false,
       keyboardOffset = 0,
@@ -79,10 +84,14 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
     },
     ref
   ) => {
+    // Context
+    const modalSheetContext = useContext(ModalSheetContext);
+
     // State management
     const [visible, setVisible] = useState(false);
     const visibleRef = useRef(visible);
     const [currentSnapIndex, setCurrentSnapIndex] = useState(initialSnapIndex);
+    const modalIdRef = useRef(name || `modal-sheet-${Math.random().toString(36).substr(2, 9)}`);
 
     // Keep visibleRef in sync with visible state
     useEffect(() => {
@@ -224,16 +233,33 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
     );
 
     // Expose imperative methods through ref
-    useImperativeHandle(ref, () => ({
-      open,
-      close,
-      present: open,
-      dismiss: close,
-      snapToPoint,
-      handleScroll,
-      handleScrollBeginDrag,
-      handleScrollEndDrag,
-    }));
+    const modalSheetRef = useMemo(
+      () => ({
+        open,
+        close,
+        present: open,
+        dismiss: close,
+        snapToPoint,
+        handleScroll,
+        handleScrollBeginDrag,
+        handleScrollEndDrag,
+      }),
+      [open, close, snapToPoint, handleScroll, handleScrollBeginDrag, handleScrollEndDrag]
+    );
+
+    useImperativeHandle(ref, () => modalSheetRef, [modalSheetRef]);
+
+    // Register/unregister modal with context provider
+    useEffect(() => {
+      if (modalSheetContext && modalIdRef.current) {
+        modalSheetContext.registerModal(modalIdRef.current, modalSheetRef);
+
+        return () => {
+          modalSheetContext.unregisterModal(modalIdRef.current);
+        };
+      }
+      return undefined;
+    }, [modalSheetContext, modalSheetRef]);
 
     // Reset animation values when modal is not visible
     useEffect(() => {
