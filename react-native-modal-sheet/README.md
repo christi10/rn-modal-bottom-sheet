@@ -44,10 +44,17 @@ A performant, gesture-enabled bottom sheet component for React Native with snap 
 ## 📦 Installation
 
 ```bash
-npm install rn-modal-bottom-sheet
+npm install rn-modal-bottom-sheet react-native-safe-area-context
 # or
-yarn add rn-modal-bottom-sheet
+yarn add rn-modal-bottom-sheet react-native-safe-area-context
 ```
+
+### Peer Dependencies
+
+This package requires the following peer dependencies:
+- `react-native-safe-area-context` (>=3.0.0)
+- `react-native-gesture-handler` (>=2.0.0) - Only needed if using `enableDragAndDrop`
+- `react-native-reanimated` (>=2.0.0) - Only needed if using `SharedValue` for snap points
 
 ## 🚀 Quick Start
 
@@ -162,6 +169,7 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
 | `handleColor` | `string` | `'#DDD'` | Color of the drag handle |
 | `backdropOpacity` | `number` | `0.5` | Opacity of the backdrop (0-1) |
 | `dragThreshold` | `number` | `125` | Distance to drag before sheet closes |
+| `applyBottomInset` | `boolean` | `true` | Apply bottom safe area inset padding to content |
 | `aria-label` | `string` | `'Bottom sheet'` | Accessible label for the modal |
 | `aria-describedby` | `string` | - | ID of element describing the modal |
 | `backdropAriaLabel` | `string` | `'Close bottom sheet'` | Accessible label for backdrop |
@@ -218,6 +226,25 @@ import DraggableFlatList from 'react-native-draggable-flatlist';
       <Text key={item.id}>{item.name}</Text>
     ))}
   </ScrollView>
+</ModalSheet>
+```
+
+### With Safe Area Insets
+
+```tsx
+// The bottom safe area inset is applied by default
+<ModalSheet ref={sheetRef} height={400}>
+  <View>
+    <Text>Content with safe area padding</Text>
+    {/* Bottom padding automatically applied for devices with home indicator */}
+  </View>
+</ModalSheet>
+
+// Disable bottom inset if not needed
+<ModalSheet ref={sheetRef} height={400} applyBottomInset={false}>
+  <View>
+    <Text>Content without safe area padding</Text>
+  </View>
 </ModalSheet>
 ```
 
