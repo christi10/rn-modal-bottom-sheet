@@ -16,6 +16,7 @@ import {
   Easing,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Types and interfaces
 import { ModalSheetProps, ModalSheetRef } from './types/ModalSheet.types';
@@ -76,6 +77,7 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
       animationDuration = DEFAULT_VALUES.DEFAULT_ANIMATION_DURATION,
       containerStyle,
       modalProps,
+      applyBottomInset = true,
       // Accessibility props
       'aria-label': ariaLabel = 'Bottom sheet',
       'aria-describedby': ariaDescribedBy,
@@ -86,6 +88,9 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
   ) => {
     // Context
     const modalSheetContext = useContext(ModalSheetContext);
+
+    // Get safe area insets
+    const insets = useSafeAreaInsets();
 
     // State management
     const [visible, setVisible] = useState(false);
@@ -327,7 +332,9 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
             handleMouseMove={touchHandlers.handleMouseMove}
             handleMouseUp={handleMouseUpWithSnap}
           />
-          {children}
+          <View style={applyBottomInset ? { paddingBottom: insets.bottom } : null}>
+            {children}
+          </View>
         </ModalSheetContent>
       </View>
     );

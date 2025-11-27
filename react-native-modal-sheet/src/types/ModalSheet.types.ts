@@ -58,4 +58,5 @@ export interface ModalSheetProps extends ModalSheetAccessibilityProps {
   springDamping?: number;
   containerStyle?: ViewStyle;
   modalProps?: Partial<ModalProps>;
+  applyBottomInset?: boolean;
 }
