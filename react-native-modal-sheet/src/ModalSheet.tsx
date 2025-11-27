@@ -332,7 +332,7 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
             handleMouseMove={touchHandlers.handleMouseMove}
             handleMouseUp={handleMouseUpWithSnap}
           />
-          <View style={applyBottomInset ? { paddingBottom: insets.bottom } : undefined}>
+          <View style={applyBottomInset ? { paddingBottom: insets.bottom } : null}>
             {children}
           </View>
         </ModalSheetContent>
