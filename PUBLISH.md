@@ -22,8 +22,8 @@ import ModalSheet, { ModalSheetRef } from 'rn-modal-bottom-sheet';
 
 ## GitHub Repository
 
-**Repository URL:** https://github.com/christi10/ModalSheet
-**Clone URL:** `git clone https://github.com/christi10/ModalSheet.git`
+**Repository URL:** https://github.com/christi10/rn-modal-bottom-sheet
+**Clone URL:** `git clone https://github.com/christi10/rn-modal-bottom-sheet.git`
 
 ## Publishing Workflow
 
@@ -87,8 +87,8 @@ ModalSheet/
 ## Links
 
 - **NPM Package:** https://www.npmjs.com/package/rn-modal-bottom-sheet
-- **GitHub Repository:** https://github.com/christi10/ModalSheet
-- **Issues:** https://github.com/christi10/ModalSheet/issues
+- **GitHub Repository:** https://github.com/christi10/rn-modal-bottom-sheet
+- **Issues:** https://github.com/christi10/rn-modal-bottom-sheet/issues
 - **Author:** Christi10
 
 ## Notes

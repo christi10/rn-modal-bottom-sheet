@@ -39,11 +39,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/christi10/ModalSheet.git"
+    "url": "https://github.com/christi10/rn-modal-bottom-sheet.git"
   },
-  "homepage": "https://github.com/christi10/ModalSheet#readme",
+  "homepage": "https://github.com/christi10/rn-modal-bottom-sheet#readme",
   "bugs": {
-    "url": "https://github.com/christi10/ModalSheet/issues"
+    "url": "https://github.com/christi10/rn-modal-bottom-sheet/issues"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

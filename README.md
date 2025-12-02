@@ -35,8 +35,8 @@ A React Native Expo app demonstrating the powerful **React Native Modal Sheet** 
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/christi10/ModalSheet.git
-cd ModalSheet
+git clone https://github.com/christi10/rn-modal-bottom-sheet.git
+cd rn-modal-bottom-sheet
 ```
 
 2. **Install dependencies**

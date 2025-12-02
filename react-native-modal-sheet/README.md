@@ -2,17 +2,17 @@
 
 [![npm version](https://img.shields.io/npm/v/rn-modal-bottom-sheet.svg)](https://www.npmjs.com/package/rn-modal-bottom-sheet)
 [![npm downloads](https://img.shields.io/npm/dt/rn-modal-bottom-sheet.svg)](https://www.npmjs.com/package/rn-modal-bottom-sheet)
-[![GitHub stars](https://img.shields.io/github/stars/christi10/ModalSheet.svg?style=social)](https://github.com/christi10/ModalSheet)
+[![GitHub stars](https://img.shields.io/github/stars/christi10/rn-modal-bottom-sheet.svg?style=social)](https://github.com/christi10/rn-modal-bottom-sheet)
 
 **rn-modal-bottom-sheet** is a performant, gesture-enabled bottom sheet component for React Native with snap points, scroll-to-expand, and pull-to-collapse functionality. Zero native dependencies, works seamlessly with Expo!
 
 ## 📱 Demo
 
-> 🎥 **[Click here to view Demo Video](https://github.com/christi10/ModalSheet/blob/main/docs/assets/modal-sheet-demo.mp4)** - See the modal sheet in action with snap points, scroll-to-expand, and smooth animations!
+> 🎥 **[Click here to view Demo Video](https://github.com/christi10/rn-modal-bottom-sheet/blob/main/docs/assets/modal-sheet-demo.mp4)** - See the modal sheet in action with snap points, scroll-to-expand, and smooth animations!
 
 <!-- Video will be embedded here after uploading through GitHub issue -->
 <!-- To embed:
-1. Go to https://github.com/christi10/ModalSheet/issues
+1. Go to https://github.com/christi10/rn-modal-bottom-sheet/issues
 2. Create a new issue or open an existing one
 3. Drag and drop the modal-sheet-demo.mp4 file into the comment box
 4. GitHub will generate a URL like: https://github.com/user-attachments/assets/[id]
@@ -289,9 +289,9 @@ Fully accessible with WCAG compliance:
 
 ## 🔗 Links
 
-- [GitHub Repository](https://github.com/christi10/ModalSheet)
-- [Changelog](https://github.com/christi10/ModalSheet/blob/main/CHANGELOG.md)
-- [Issues](https://github.com/christi10/ModalSheet/issues)
+- [GitHub Repository](https://github.com/christi10/rn-modal-bottom-sheet)
+- [Changelog](https://github.com/christi10/rn-modal-bottom-sheet/blob/main/CHANGELOG.md)
+- [Issues](https://github.com/christi10/rn-modal-bottom-sheet/issues)
 
 ## 📄 License
 
