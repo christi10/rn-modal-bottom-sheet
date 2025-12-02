@@ -1,7 +1,7 @@
 {
   "name": "rn-modal-bottom-sheet",
-  "version": "2.4.0",
-  "description": "A performant, gesture-enabled bottom sheet component for React Native with snap points and scroll-to-expand",
+  "version": "2.4.1",
+  "description": "rn-modal-bottom-sheet - A performant, gesture-enabled bottom sheet component for React Native with snap points, scroll-to-expand, and pull-to-collapse. Zero native dependencies, works with Expo.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -11,15 +11,29 @@
     "lint": "eslint src --ext .ts,.tsx"
   },
   "keywords": [
+    "rn-modal-bottom-sheet",
     "react-native",
     "bottom-sheet",
     "modal",
     "sheet",
+    "modal-sheet",
+    "bottomsheet",
     "gesture",
     "animated",
+    "snap-points",
+    "scroll-to-expand",
+    "pull-to-collapse",
+    "drag-to-close",
     "ios",
     "android",
-    "typescript"
+    "expo",
+    "typescript",
+    "react-native-modal",
+    "react-native-bottom-sheet",
+    "drawer",
+    "slide-up",
+    "actionsheet",
+    "action-sheet"
   ],
   "author": "Christi10",
   "license": "MIT",

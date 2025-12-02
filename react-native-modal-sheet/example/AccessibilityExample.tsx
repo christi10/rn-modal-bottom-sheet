@@ -8,7 +8,7 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import ModalSheet, { ModalSheetRef } from 'react-native-modal-sheet';
+import ModalSheet, { ModalSheetRef } from 'rn-modal-bottom-sheet';
 
 const countries = [
   { name: 'United States', code: 'US' },

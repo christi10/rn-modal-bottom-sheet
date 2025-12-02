@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   Pressable,
 } from 'react-native';
-import ModalSheet, { ModalSheetRef } from 'react-native-modal-sheet';
+import ModalSheet, { ModalSheetRef } from 'rn-modal-bottom-sheet';
 
 export default function App() {
   const sheetRef = useRef<ModalSheetRef>(null);
@@ -34,7 +34,7 @@ export default function App() {
           <Text style={styles.sheetTitle}>Welcome! 👋</Text>
 
           <Text style={styles.description}>
-            This is a demo of the react-native-modal-sheet component.
+            This is a demo of the rn-modal-bottom-sheet component.
           </Text>
 
           <View style={styles.features}>

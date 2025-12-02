@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.1] - 2025-12-02
+
+### Changed
+- **SEO & Discoverability Improvements**: Enhanced package discoverability on npm and Google search
+  - Updated package description to include full package name and key features
+  - Expanded keywords from 9 to 23 terms for better search visibility
+  - Added package name emphasis in README
+  - Updated GitHub repository metadata and topics
+  - Improved documentation for search engine optimization
+
+## [2.4.0] - 2025-11-27
+
+### Added
+- **`applyBottomInset` Prop**: New prop to automatically apply bottom safe area inset padding
+  - Enabled by default (`true`) to handle devices with home indicators and notches
+  - Automatically adds bottom padding based on device safe area insets
+  - Can be disabled by setting `applyBottomInset={false}` when not needed
+  - Requires `react-native-safe-area-context` (>=3.0.0) as peer dependency
+
+### Dependencies
+- Added `react-native-safe-area-context` as a required peer dependency (>=3.0.0)
+- Added `react-native-gesture-handler` as a peer dependency (>=2.0.0)
+- Added `react-native-reanimated` as a peer dependency (>=2.0.0)
+
 ## [2.3.0] - 2025-10-14
 
 ### Added

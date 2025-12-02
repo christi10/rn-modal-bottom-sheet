@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.1] - 2025-12-02
+
+### Changed
+- **SEO & Discoverability Improvements**: Enhanced package discoverability on npm and Google search
+  - Updated package description to include full package name and key features
+  - Expanded keywords from 9 to 23 terms for better search visibility
+  - Added package name emphasis in README
+  - Updated GitHub repository metadata and topics
+  - Improved documentation for search engine optimization
+
 ## [2.4.0] - 2025-11-27
 
 ### Added

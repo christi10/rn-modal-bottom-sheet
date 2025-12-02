@@ -80,14 +80,14 @@ Interactive demonstrations of different modal sheet types:
 
 ## 🔧 React Native Modal Sheet API
 
-This app demonstrates the `react-native-modal-sheet` component with the following features:
+This app demonstrates the `rn-modal-bottom-sheet` component with the following features:
 
 ### Basic Usage
 
 ```tsx
 import React, { useRef } from 'react';
 import { Button, Text, View } from 'react-native';
-import ModalSheet, { ModalSheetRef } from 'react-native-modal-sheet';
+import ModalSheet, { ModalSheetRef } from 'rn-modal-bottom-sheet';
 
 function App() {
   const sheetRef = useRef<ModalSheetRef>(null);
