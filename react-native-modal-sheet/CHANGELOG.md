@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.2] - 2025-01-12
+
+### Changed
+- **Accessibility Improvement**: Handle button now hidden from screen readers
+  - Added `accessible={false}` for iOS
+  - Added `accessibilityElementsHidden={true}` for iOS screen readers
+  - Added `importantForAccessibility="no-hide-descendants"` for Android screen readers
+  - Added `aria-hidden={true}` for web screen readers
+  - Handle remains visually present and functional for touch/mouse interactions
+
 ## [2.4.1] - 2025-12-02
 
 ### Changed

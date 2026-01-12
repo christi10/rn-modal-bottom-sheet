@@ -57,8 +57,10 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
     >
       <Pressable
         onPress={onPress}
-        role="button"
-        aria-label="Close bottom sheet"
+        accessible={false}
+        accessibilityElementsHidden={true}
+        importantForAccessibility="no-hide-descendants"
+        aria-hidden={true}
         style={({ pressed }) => [
           modalSheetStyles.handle,
           {
