@@ -14,6 +14,7 @@ import {
   Animated,
   ViewStyle,
   Easing,
+  AccessibilityInfo,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -97,11 +98,28 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
     const visibleRef = useRef(visible);
     const [currentSnapIndex, setCurrentSnapIndex] = useState(initialSnapIndex);
     const modalIdRef = useRef(name || `modal-sheet-${Math.random().toString(36).substr(2, 9)}`);
+    const [isScreenReaderEnabled, setIsScreenReaderEnabled] = useState(false);
 
     // Keep visibleRef in sync with visible state
     useEffect(() => {
       visibleRef.current = visible;
     }, [visible]);
+
+    // Detect screen reader
+    useEffect(() => {
+      const checkScreenReader = async () => {
+        const enabled = await AccessibilityInfo.isScreenReaderEnabled();
+        setIsScreenReaderEnabled(enabled);
+      };
+      checkScreenReader();
+      const subscription = AccessibilityInfo.addEventListener(
+        'screenReaderChanged',
+        setIsScreenReaderEnabled
+      );
+      return () => {
+        subscription.remove();
+      };
+    }, []);
 
     // Get screen dimensions and calculate values
     const screenHeight = useMemo(() => getScreenHeight(), []);
@@ -312,6 +330,7 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
           onPress={close}
           backdropAriaLabel={backdropAriaLabel}
           backdropOpacityAnim={backdropOpacityAnim}
+          isScreenReaderEnabled={isScreenReaderEnabled}
         />
 
         <ModalSheetContent
@@ -324,6 +343,7 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
             showHandle={showHandle}
             handleColor={handleColor}
             onPress={close}
+            isScreenReaderEnabled={isScreenReaderEnabled}
             isMouseDragging={isMouseDragging}
             handleTouchStart={touchHandlers.handleTouchStart}
             handleTouchMove={touchHandlers.handleTouchMove}
