@@ -9,6 +9,7 @@ interface ModalSheetHandleProps {
   showHandle: boolean;
   handleColor: string;
   onPress: () => void;
+  isScreenReaderEnabled: boolean;
   isMouseDragging: React.MutableRefObject<boolean>;
   handleTouchStart: (e: any) => void;
   handleTouchMove: (e: any) => void;
@@ -22,6 +23,7 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
   showHandle,
   handleColor,
   onPress,
+  isScreenReaderEnabled,
   isMouseDragging,
   handleTouchStart,
   handleTouchMove,
@@ -43,10 +45,10 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
           WebkitUserSelect: 'none',
         },
       ]}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      {...(Platform.OS === 'web'
+      onTouchStart={isScreenReaderEnabled ? undefined : handleTouchStart}
+      onTouchMove={isScreenReaderEnabled ? undefined : handleTouchMove}
+      onTouchEnd={isScreenReaderEnabled ? undefined : handleTouchEnd}
+      {...(Platform.OS === 'web' && !!isScreenReaderEnabled
         ? {
             onMouseDown: handleMouseDown,
             onMouseMove: handleMouseMove,
@@ -56,11 +58,13 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
         : {})}
     >
       <Pressable
-        onPress={onPress}
-        accessible={false}
-        accessibilityElementsHidden={true}
-        importantForAccessibility="no-hide-descendants"
-        aria-hidden={true}
+        onPress={isScreenReaderEnabled ? onPress : undefined}
+        accessible={isScreenReaderEnabled}
+        accessibilityElementsHidden={!isScreenReaderEnabled}
+        importantForAccessibility={isScreenReaderEnabled ? 'yes' : 'no-hide-descendants'}
+        aria-hidden={!isScreenReaderEnabled}
+        accessibilityLabel="Close"
+        accessibilityRole="button"
         style={({ pressed }) => [
           modalSheetStyles.handle,
           {
@@ -81,18 +85,24 @@ interface ModalSheetBackdropProps {
   onPress: () => void;
   backdropAriaLabel: string;
   backdropOpacityAnim: Animated.Value;
+  isScreenReaderEnabled: boolean;
 }
 
 export const ModalSheetBackdrop: React.FC<ModalSheetBackdropProps> = ({
   onPress,
   backdropAriaLabel,
   backdropOpacityAnim,
+  isScreenReaderEnabled,
 }) => {
   return (
     <Pressable
       onPress={onPress}
-      role="button"
-      aria-label={backdropAriaLabel}
+      accessible={!isScreenReaderEnabled}
+      accessibilityElementsHidden={isScreenReaderEnabled}
+      importantForAccessibility={isScreenReaderEnabled ? 'no-hide-descendants' : 'yes'}
+      aria-hidden={isScreenReaderEnabled}
+      role={isScreenReaderEnabled ? undefined : 'button'}
+      aria-label={isScreenReaderEnabled ? undefined : backdropAriaLabel}
       style={modalSheetStyles.backdrop}
     >
       <Animated.View
