@@ -344,6 +344,7 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
             handleColor={handleColor}
             onPress={close}
             isScreenReaderEnabled={isScreenReaderEnabled}
+            closeModalAriaLabel={backdropAriaLabel}
             isMouseDragging={isMouseDragging}
             handleTouchStart={touchHandlers.handleTouchStart}
             handleTouchMove={touchHandlers.handleTouchMove}

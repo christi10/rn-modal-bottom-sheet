@@ -10,6 +10,7 @@ interface ModalSheetHandleProps {
   handleColor: string;
   onPress: () => void;
   isScreenReaderEnabled: boolean;
+  closeModalAriaLabel?: string;
   isMouseDragging: React.MutableRefObject<boolean>;
   handleTouchStart: (e: any) => void;
   handleTouchMove: (e: any) => void;
@@ -24,6 +25,7 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
   handleColor,
   onPress,
   isScreenReaderEnabled,
+  closeModalAriaLabel,
   isMouseDragging,
   handleTouchStart,
   handleTouchMove,
@@ -63,7 +65,7 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
         accessibilityElementsHidden={!isScreenReaderEnabled}
         importantForAccessibility={isScreenReaderEnabled ? 'yes' : 'no-hide-descendants'}
         aria-hidden={!isScreenReaderEnabled}
-        accessibilityLabel="Close"
+        accessibilityLabel={closeModalAriaLabel}
         accessibilityRole="button"
         style={({ pressed }) => [
           modalSheetStyles.handle,
