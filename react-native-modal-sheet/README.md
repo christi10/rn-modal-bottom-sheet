@@ -267,10 +267,11 @@ And collapse by pulling up at the top:
 Fully accessible with WCAG compliance:
 
 - ✅ **ARIA Attributes** - Modern `aria-label`, `aria-modal`, `aria-describedby`
-- ✅ **Screen Reader Support** - Proper labeling for all interactive elements
+- ✅ **Screen Reader Adaptive** - Automatically detects VoiceOver/TalkBack and adapts UI behavior
+- ✅ **Accessible Close Action** - Handle becomes a dedicated close button when screen reader is active
 - ✅ **Keyboard Navigation** - Full keyboard support
 - ✅ **Focus Management** - Correct focus handling
-- ✅ **Gesture Alternatives** - Alternative methods for all gestures
+- ✅ **Gesture Alternatives** - Touch gestures gracefully disabled for screen reader users with button alternatives
 
 ## 🚀 Performance
 

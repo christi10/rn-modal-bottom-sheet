@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.1] - 2026-04-09
+
+### Added
+- **Custom Close Button Aria Label**: The accessibility "Close" button on the handle now accepts a custom label via `backdropAriaLabel` prop, enabling localization/translation support for screen reader users
+
+## [2.5.0] - 2026-02-11
+
+### Added
+- **Screen Reader Detection**: Automatically detects when a screen reader (VoiceOver/TalkBack) is active and adapts the UI accordingly
+  - Handle becomes a pressable "Close" button when screen reader is enabled
+  - Touch gestures on handle are disabled when screen reader is active to prevent accidental dismissal
+  - Backdrop hides from accessibility tree when screen reader is enabled, directing focus to the close button
+
+### Fixed
+- **Modal Closing in Accessibility Mode**: Fixed issue where the modal could not be properly closed when a screen reader was active
+  - Handle now provides a dedicated close action for screen reader users
+  - Proper `accessibilityRole`, `accessibilityLabel`, and `importantForAccessibility` attributes applied conditionally
+
+## [2.4.2] - 2025-12-15
+
+### Added
+- **Handle Hidden from Screen Readers**: Handle element is now hidden from screen readers using `accessibilityElementsHidden` and `importantForAccessibility` for improved accessibility when screen reader is not active
+
 ## [2.4.1] - 2025-12-02
 
 ### Changed
