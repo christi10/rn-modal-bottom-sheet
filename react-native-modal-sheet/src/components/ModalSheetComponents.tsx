@@ -8,6 +8,8 @@ import { modalSheetStyles } from '../styles/ModalSheet.styles';
 interface ModalSheetHandleProps {
   showHandle: boolean;
   handleColor: string;
+  handleStyle?: ViewStyle;
+  handleContainerStyle?: ViewStyle;
   onPress: () => void;
   isScreenReaderEnabled: boolean;
   closeModalAriaLabel?: string;
@@ -23,6 +25,8 @@ interface ModalSheetHandleProps {
 export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
   showHandle,
   handleColor,
+  handleStyle,
+  handleContainerStyle,
   onPress,
   isScreenReaderEnabled,
   closeModalAriaLabel,
@@ -46,6 +50,7 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
           userSelect: 'none',
           WebkitUserSelect: 'none',
         },
+        handleContainerStyle,
       ]}
       onTouchStart={isScreenReaderEnabled ? undefined : handleTouchStart}
       onTouchMove={isScreenReaderEnabled ? undefined : handleTouchMove}
@@ -74,6 +79,7 @@ export const ModalSheetHandle: React.FC<ModalSheetHandleProps> = ({
             opacity: pressed ? 0.6 : 1,
             cursor: Platform.OS === 'web' ? 'pointer' : undefined,
           },
+          handleStyle,
         ]}
       />
     </View>

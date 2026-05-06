@@ -59,4 +59,6 @@ export interface ModalSheetProps extends ModalSheetAccessibilityProps {
   containerStyle?: ViewStyle;
   modalProps?: Partial<ModalProps>;
   applyBottomInset?: boolean;
+  handleStyle?: ViewStyle;
+  handleContainerStyle?: ViewStyle;
 }
