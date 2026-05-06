@@ -84,6 +84,8 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
       'aria-describedby': ariaDescribedBy,
       backdropAriaLabel = 'Close bottom sheet',
       sheetAriaProps = {},
+      handleStyle,
+      handleContainerStyle,
     },
     ref
   ) => {
@@ -352,6 +354,8 @@ const ModalSheet = forwardRef<ModalSheetRef, ModalSheetProps>(
             handleMouseDown={touchHandlers.handleMouseDown}
             handleMouseMove={touchHandlers.handleMouseMove}
             handleMouseUp={handleMouseUpWithSnap}
+            handleStyle={handleStyle}
+            handleContainerStyle={handleContainerStyle}
           />
           <View style={applyBottomInset ? { paddingBottom: insets.bottom } : null}>
             {children}
