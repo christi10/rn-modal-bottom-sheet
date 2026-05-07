@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.2] - 2026-05-07
+
+### Added
+- **Handle Style Customization**: New `handleStyle` and `handleContainerStyle` props to customize the appearance of the handle and its container
+  - `handleStyle`: Override the style of the handle bar itself (color, width, height, border radius, etc.)
+  - `handleContainerStyle`: Override the style of the container wrapping the handle (padding, alignment, etc.)
+  - Both props accept a standard React Native `ViewStyle` object and merge on top of the default styles
+
+## [2.5.1] - 2026-04-09
+
+### Added
+- **Custom Close Button Aria Label**: The accessibility "Close" button on the handle now accepts a custom label via `backdropAriaLabel` prop, enabling localization/translation support for screen reader users
+
+## [2.5.0] - 2026-02-11
+
+### Added
+- **Screen Reader Detection**: Automatically detects when a screen reader (VoiceOver/TalkBack) is active and adapts the UI accordingly
+  - Handle becomes a pressable "Close" button when screen reader is enabled
+  - Touch gestures on handle are disabled when screen reader is active to prevent accidental dismissal
+  - Backdrop hides from accessibility tree when screen reader is enabled, directing focus to the close button
+
+### Fixed
+- **Modal Closing in Accessibility Mode**: Fixed issue where the modal could not be properly closed when a screen reader was active
+  - Handle now provides a dedicated close action for screen reader users
+  - Proper `accessibilityRole`, `accessibilityLabel`, and `importantForAccessibility` attributes applied conditionally
+
 ## [2.4.2] - 2025-01-12
 
 ### Changed

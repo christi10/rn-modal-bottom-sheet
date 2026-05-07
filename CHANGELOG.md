@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.5.2] - 2026-05-07
+
+### Added
+- **Handle Style Customization**: New `handleStyle` and `handleContainerStyle` props to customize the appearance of the handle and its container
+  - `handleStyle`: Override the style of the handle bar itself (color, width, height, border radius, etc.)
+  - `handleContainerStyle`: Override the style of the container wrapping the handle (padding, alignment, etc.)
+  - Both props accept a standard React Native `ViewStyle` object and merge on top of the default styles
+
 ## [2.5.1] - 2026-04-09
 
 ### Added
